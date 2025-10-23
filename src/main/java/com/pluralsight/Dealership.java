@@ -1,5 +1,5 @@
 package com.pluralsight;
-
+//holds dealership info and a list of vehicles.
 import java.util.ArrayList;
 
 public class Dealership {

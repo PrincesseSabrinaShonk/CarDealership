@@ -1,11 +1,11 @@
 package com.pluralsight;
-
+ //holds vehicle data
 public class Vehicle {
     private String vin;
     private String make;
     private String model;
-    private int year ;
-    private double price ;
+    private int year;
+    private double price;
 
     public Vehicle(String vin, String make, String model, int year, double price) { // ask about specific
         this.vin = vin;
