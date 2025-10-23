@@ -2,7 +2,10 @@ package com.pluralsight;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hello");
+
+        UserInterface userInterface = new UserInterface();
+
+        userInterface.display();
 
 
         }

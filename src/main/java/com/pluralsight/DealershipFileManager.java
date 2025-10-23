@@ -28,16 +28,19 @@ public class DealershipFileManager { // This class handles reading and saving th
            //Read remaining lines from vehicle inventory
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\|");
-
-                if (parts.length == 5) {
+                if (parts.length == 8) {  // Changed from 5 to 8
                     String vin = parts[0];
                     int year = Integer.parseInt(parts[1]);
                     String make = parts[2];
                     String model = parts[3];
-                    double price =  Double.parseDouble(parts[4]);
+                    String vehicleType = parts[4];
+                    String color = parts[5];
+                    int odometer = Integer.parseInt(parts[6]);
+                    double price = Double.parseDouble(parts[7]);
 
-                    Vehicle vehicle = new Vehicle(vin, make, model, year, price); //Create Vehicle object using the field your Vehicle class
+                    Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
                     dealership.addVehicle(vehicle);
+
                 }
             }
         } catch (IOException e) {
