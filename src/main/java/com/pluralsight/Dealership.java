@@ -1,18 +1,17 @@
 package com.pluralsight;
-//holds dealership info and a list of vehicles.
-import java.util.ArrayList;
 
+import java.util.ArrayList;  //hold dealership inf of all vehicle the dealership currently has for sale.
 public class Dealership {
     private String name;
     private String address;
     private String phone;
     private ArrayList<Vehicle> inventory; // List of all vehicles in the dealership
 
-    public Dealership(String name, String address, String phone) { // create a nnew dealership with name address phone
+    public Dealership(String name, String address, String phone) { // create a new dealership with name address phone
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.inventory = new ArrayList<>();// Always initialize your ArrayList
+        this.inventory = new ArrayList<>();
     }
 
     public String getPhone() {
@@ -39,7 +38,7 @@ public class Dealership {
         this.phone = phone;
     }
 
-    // create the method
+    // create the method that Add a vehicle
     public void addVehicle(Vehicle vehicle) {
         inventory.add(vehicle);
     }
@@ -49,19 +48,76 @@ public class Dealership {
     }
 
 
-    public ArrayList<Vehicle> getVehiclesByMake(String make) {
-        return null;
+    public ArrayList<Vehicle> getVehiclesByMakeModel(String make, String model) { // Find vehicles by make and model
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getMake().equalsIgnoreCase(make) &&
+                    vehicle.getModel().equalsIgnoreCase(model)) {
+                results.add(vehicle);
+            }
+        }
+        return results;
     }
 
-    public ArrayList<Vehicle> getVehiclesByPrice(double min, double max) {
-        return null;
+    public ArrayList<Vehicle> getVehiclesByPrice(double min, double max) {    // Find vehicles by price range
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getPrice() >= min && vehicle.getPrice() <= max){
+                results.add(vehicle);
+        }
+    }
+    return results;
+    }
+    public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {  // Find vehicles by year range
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getYear() >= min && vehicle.getYear() <= max) {
+                results.add(vehicle);
+            }
+        }
+        return results;
     }
 
-    public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {
-        return null;
+    public void removeVehicle(Vehicle vehicle) {
+        inventory.remove(vehicle);  // remove vehicle from list
     }
 
-    public void removeVehicle(String vin) {
-        // leave empty for now
+    public ArrayList<Vehicle> getVehiclesByColor(String color){ // Find vehicle  by color
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getColor().equalsIgnoreCase(color)) {
+                results.add(vehicle);
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Vehicle> getVehiclesByMileage(int min, int max) { // Find vehicles by mileage range
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getOdometer() >= min && vehicle.getOdometer() <= max) {
+                results.add(vehicle);
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Vehicle> getVehiclesByType( String vehicleType) { // Find vehicles by type
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getVehicleType().equalsIgnoreCase(vehicleType)) {
+                results.add(vehicle);
+            }
+        }
+        return results;
+      }
+
+    @Override
+    public String toString() {
+        return "Dealership{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

@@ -1,25 +1,14 @@
 package com.pluralsight;
- //holds vehicle data
-public class Vehicle {
-    private String vin;
-    private String make;
-    private String model;
-    private int year;
-    private double price;
-    private String vehicleType;
-    private String color;
-    private int odometer;
 
-     public Vehicle(String vin, String make, String model, int year, double price, String vehicleType, String color, int odometer) {
-         this.vin = vin;
-         this.make = make;
-         this.model = model;
-         this.year = year;
-         this.price = price;
-         this.vehicleType = vehicleType;
-         this.color = color;
-         this.odometer = odometer;
-     }
+public class Vehicle {  //hold vehicle info
+     private String vin;
+     private int year;
+     private String make;
+     private String model;
+     private String vehicleType;
+     private String color;
+     private int odometer;
+     private double price;
 
      public String getVin() {
          return vin;
@@ -27,6 +16,14 @@ public class Vehicle {
 
      public void setVin(String vin) {
          this.vin = vin;
+     }
+
+     public int getYear() {
+         return year;
+     }
+
+     public void setYear(int year) {
+         this.year = year;
      }
 
      public String getMake() {
@@ -43,22 +40,6 @@ public class Vehicle {
 
      public void setModel(String model) {
          this.model = model;
-     }
-
-     public int getYear() {
-         return year;
-     }
-
-     public void setYear(int year) {
-         this.year = year;
-     }
-
-     public double getPrice() {
-         return price;
-     }
-
-     public void setPrice(double price) {
-         this.price = price;
      }
 
      public String getVehicleType() {
@@ -84,6 +65,43 @@ public class Vehicle {
      public void setOdometer(int odometer) {
          this.odometer = odometer;
      }
+
+     public double getPrice() {
+         return price;
+     }
+
+     public void setPrice(double price) {
+         this.price = price;
+     }
+
+     public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+         this.vin = vin;
+         this.make = make;
+         this.model = model;
+         this.year = year;
+         this.price = price;
+         this.vehicleType = vehicleType;
+         this.color = color;
+         this.odometer = odometer;
+     }
+
+     @Override
+     public String toString() {
+         return "Vehicle{" +
+                 "vin='" + vin + '\'' +
+                 ", year=" + year +
+                 ", make='" + make + '\'' +
+                 ", model='" + model + '\'' +
+                 ", vehicleType='" + vehicleType + '\'' +
+                 ", color='" + color + '\'' +
+                 ", odometer=" + odometer +
+                 ", price=" + price +
+                 '}';
+     }
  }
 
+   /*
+    * When your program starts, it reads the inventory.csv file.
+   * Each line in that file is turned into a Vehicle object and added to the inventory list.
+  */
 

@@ -5,13 +5,18 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class ConsoleHelper {
-    private static Scanner  scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
-    public static int promptForInt(String prompt) { //Prompt the user for an integer and returns it.
-        System.out.print(prompt + ": ");
-        int result = scanner.nextInt();
-        scanner.nextLine();
-        return result;
+    public static int promptForInt(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt + ": ");
+                String input = scanner.nextLine();
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
     }
 
     public static double promptForDouble(String prompt) {
@@ -38,10 +43,11 @@ public class ConsoleHelper {
                 String dateAsString = scanner.nextLine();
                 return LocalDate.parse(dateAsString);
             } catch (Exception ex) {
-                System.out.println("Invalid entry! Please enter a valid date (YYYY-MM-DD).");
+                System.out.println("Invalid entry! Please enter a format date (YYYY-MM-DD).");
             }
         }
     }
+
     public static LocalTime promptForTime(String prompt) {
         while (true) {
             try {
@@ -54,4 +60,3 @@ public class ConsoleHelper {
         }
     }
 }
-
