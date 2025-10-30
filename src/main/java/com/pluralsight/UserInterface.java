@@ -55,6 +55,9 @@ public class UserInterface { // dealership object will store all cars and dealer
                 case "9":
                     processRemoveVehicleRequest();
                     break;
+                case "10":
+                    processSellLeaseVehicle();
+                    break; 
                 case "99":
                     running = false;
                     System.out.println("Exiting the program. Goodbye!");
@@ -66,6 +69,22 @@ public class UserInterface { // dealership object will store all cars and dealer
             }
         }
     }
+
+    private void processSellLeaseVehicle() {
+        String vin = ConsoleHelper.promptForString("Enter VIN");
+        Vehicle v = findVehicleByVin(vin);
+
+    }
+
+    private Vehicle findVehicleByVin(String vin) {
+        for (Vehicle v : dealership.getAllVehicles()) {
+            if (v.getVin().equalsIgnoreCase(vin)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
     private void processGetByPriceRequest() {  // Find vehicles by price range
         double min = ConsoleHelper.promptForDouble("Enter minimum price");
         double max = ConsoleHelper.promptForDouble("Enter maximum price");
@@ -95,6 +114,7 @@ public class UserInterface { // dealership object will store all cars and dealer
         System.out.println("7 : List ALL vehicles");
         System.out.println("8 : Add a vehicle");
         System.out.println("9 : Remove a vehicle");
+        System.out.println("10: Sell/Lease A vehicle");
         System.out.println("99 : Quit");
     }
 

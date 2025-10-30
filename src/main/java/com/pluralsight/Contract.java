@@ -44,10 +44,7 @@ public abstract class Contract {
     public void setVehicleSold(Vehicle vehicleSold) {
         this.vehicleSold = vehicleSold;
     }
-    public double getTotalPrice(){ // todo
-        return 0;
-    }
-    public double getMonthlyPayment(){ //todo
-        return 0;
-    }
-}
+    public abstract double getTotalPrice();
+    public abstract double getMonthlyPayment();
+   }
+  // public double
