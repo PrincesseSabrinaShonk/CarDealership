@@ -74,7 +74,8 @@ public class Vehicle {  //hold vehicle info
          this.price = price;
      }
 
-     public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+     public Vehicle(String vin, int year, String make, String model,
+                    String vehicleType, String color, int odometer, double price) {
          this.vin = vin;
          this.make = make;
          this.model = model;
