@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +9,7 @@ public class UserInterface { // dealership object will store all cars and dealer
 
     private Dealership dealership;
     private Scanner scanner;
+    private boolean financeOption;
 
 
     public UserInterface() {
@@ -56,8 +59,8 @@ public class UserInterface { // dealership object will store all cars and dealer
                     processRemoveVehicleRequest();
                     break;
                 case "10":
-                    processSellLeaseVehicle();
-                    break; 
+                    processSellOrLeaseVehicle();
+                    break;
                 case "99":
                     running = false;
                     System.out.println("Exiting the program. Goodbye!");
@@ -70,12 +73,85 @@ public class UserInterface { // dealership object will store all cars and dealer
         }
     }
 
-    private void processSellLeaseVehicle() {
-        String vin = ConsoleHelper.promptForString("Enter VIN");
-        Vehicle v = findVehicleByVin(vin);
+    private void processSellOrLeaseVehicle() {
+            System.out.println("\n=== Sell/Lease a Vehicle ===");
+            String vin = ConsoleHelper.promptForString("Enter the VIN of the vehicle");
+            Vehicle vehicle = dealership.getVehicleByVin(vin);
+
+            if (vehicle == null) {
+                System.out.println("Vehicle not found!");
+                return;
+            }
+            // Customer info
+            String customerName = ConsoleHelper.promptForString("Enter customer name");
+            String customerEmail = ConsoleHelper.promptForString("Enter customer email");
+            String date = LocalDate.now().toString().replace("-", "");
+
+            String type = ConsoleHelper.promptForString("Is this a (S)ale or (L)ease? Enter S or L").trim().toUpperCase();
+
+            Contract contract = null;
+
+            if ("L".equalsIgnoreCase(type)) {
+                int age = Year.now().getValue() - vehicle.getYear();
+                if (age > 3) {
+                    System.out.println("Too old to lease.");
+                    return;
+
+                }
+                // Calculate lease-specific values
+                double expectedEndingValue = vehicle.getPrice() * 0.5; // 50% of original price
+                double getLeaseFee = vehicle.getPrice() * 0.07;
+
+                contract = new LeaseContract(date, customerName, customerEmail, vehicle, getLeaseFee,expectedEndingValue );
+
+                LeaseContract lc = (LeaseContract) contract;
+
+                System.out.println("\n=== Lease Details ===");
+                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
+                System.out.printf("Expected Ending Value: $%.2f%n", lc.getExpectedEndingValue());
+                System.out.printf("Lease Fee: $%.2f%n", lc.getGetLeaseFee());
+                System.out.printf("Total Price: $%.2f%n", lc.getTotalPrice());
+                System.out.printf("Monthly Payment: $%.2f%n", lc.getMonthlyPayment());
+
+
+            } else if ("S".equalsIgnoreCase(type)) {
+                String finance = ConsoleHelper.promptForString("Finance? (Y/N)").trim().toUpperCase();
+                boolean isFinanced = "Y".equals(finance);
+                contract = new SalesContract(date, customerName, customerEmail, vehicle, isFinanced);
+                SalesContract sc = (SalesContract) contract;
+
+
+                System.out.println("\n=== Sale ===");
+                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
+                System.out.printf("Sales Tax: $%.2f%n", sc.getSalesTaxAmount());
+                System.out.printf("Recording fee: $%.2f%n", sc.getRecordingFee());
+                System.out.printf("Processing fee : $%.2f%n", sc.getProcessingFee());
+                System.out.printf("Total Price: $%.2f%n", sc.getTotalPrice());
+
+
+                if (isFinanced) {
+                    System.out.printf("Monthly Payment: $%.2f%n", sc.getMonthlyPayment());
+                } else {
+                    System.out.println("Paying in full – no monthly payment");
+                }
+            } else {
+                System.out.println("Invalid contract type selected.");
+                return;
+                }
+
+            // Save the contract to file
+            new ContractFileManager().saveContract(contract);
+
+            //  Remove the vehicle from inventory
+            dealership.removeVehicle(vehicle);
+
+            // Save updated inventory
+            new DealershipFileManager("inventory.csv").saveDealership(dealership);
+            System.out.println("\nTransaction completed successfully!");
+            System.out.println("Vehicle removed from inventory");
+            System.out.println("Contract saved to file");
 
     }
-
     private Vehicle findVehicleByVin(String vin) {
         for (Vehicle v : dealership.getAllVehicles()) {
             if (v.getVin().equalsIgnoreCase(vin)) {
@@ -84,7 +160,6 @@ public class UserInterface { // dealership object will store all cars and dealer
         }
         return null;
     }
-
     private void processGetByPriceRequest() {  // Find vehicles by price range
         double min = ConsoleHelper.promptForDouble("Enter minimum price");
         double max = ConsoleHelper.promptForDouble("Enter maximum price");
@@ -102,7 +177,6 @@ public class UserInterface { // dealership object will store all cars and dealer
             System.out.println("Dealership loaded successfully: " + dealership.getName());
         }
     }
-
     private void displayMenu() {
         System.out.println("\n===== Dealership Menu =====");
         System.out.println("1 : Find vehicles within a price range");
@@ -126,7 +200,7 @@ public class UserInterface { // dealership object will store all cars and dealer
 
         System.out.printf("%-10s %-6s %-12s %-12s %-10s %-10s %-12s %-10s%n",
                 "VIN", "Year", "Make", "Model", "Type", "Color", "Mileage", "Price");
-        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
 
         for (Vehicle v : vehicles) {
             System.out.printf("%-10s %-6d %-12s %-12s %-10s %-10s %-12d $%-10.2f%n",
@@ -168,8 +242,8 @@ public class UserInterface { // dealership object will store all cars and dealer
     }
 
     private void processAddVehicleRequest() {  // Add new vehicle to the dealership
-        System.out.println("\n===== Add New Vehicle =====");
 
+        System.out.println("\n===== Add New Vehicle =====");
         String vin = ConsoleHelper.promptForString("Enter VIN");
         int year = ConsoleHelper.promptForInt("Enter year");
         String make = ConsoleHelper.promptForString("Enter make");

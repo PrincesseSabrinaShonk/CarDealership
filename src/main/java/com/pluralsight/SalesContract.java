@@ -1,68 +1,67 @@
 package com.pluralsight;
 
-public class SalesContract extends Contract {
-    private double saleTaxAmount;
+public class SalesContract extends Contract{
+    private double salesTaxAmount;
     private double recordingFee = 100.00;
     private double processingFee;
     private boolean financeOption;
 
     public SalesContract(String date, String customerName, String customerEmail,
-                         Vehicle vehicleSold, double saleTaxAmount,
-                         double recordingFee, double processingFee, boolean financeOption) {
+                         Vehicle vehicleSold, boolean financeOption) {
         super(date, customerName, customerEmail, vehicleSold);
-        this.saleTaxAmount = saleTaxAmount;
-        this.recordingFee = recordingFee;
-        this.processingFee = processingFee;
         this.financeOption = financeOption;
+
+        this.salesTaxAmount = vehicleSold.getPrice() * 0.05;
+
+        if (vehicleSold.getPrice() < 10000){
+            this.processingFee = 295;
+        } else{
+            this.processingFee = 495;
+        }
+
     }
 
-    public boolean isFinanceOption() {
+    public double getSalesTaxAmount() {
+        return salesTaxAmount;
+    }
+
+    public double getRecordingFee() {
+        return recordingFee;
+    }
+
+    public double getProcessingFee() {
+        return processingFee;
+    }
+
+    public boolean isWantToFinance() {
         return financeOption;
     }
 
-    public void setFinanceOption(boolean financeOption) {
-        this.financeOption = financeOption;
-    }
+
 
     @Override
     public double getTotalPrice() {
-        double price = getVehicleSold().getPrice();
-        double salesTax = price * 0.05;
-        double recordingFee = 100.00;
-        double processingFee = (price < 10000) ? 295.00 : 495.00;
-
-        return price + salesTax + recordingFee + processingFee;
+        return getVehicleSold().getPrice() + salesTaxAmount + recordingFee + processingFee;
     }
 
     @Override
     public double getMonthlyPayment() {
-        if (!financeOption) return 0.0;
-        double totalPrice = getTotalPrice();
-        double interestRate;
+        if (!financeOption) {
+            return 0.0;
+        }
+        double price = getTotalPrice();
+        double monthlyRate;
         int months;
-        if (totalPrice >= 10000) {
-            interestRate = 4.25 / 100 / 12;
+
+        if(getVehicleSold().getPrice() >= 10000) {
+            monthlyRate = 0.0425 / 12;
             months = 48;
         } else {
-            interestRate = 5.25 / 100 / 12;
+            monthlyRate = 0.0525 / 12;
             months = 24;
         }
-        double r = interestRate;
-        double n = months;
-        return totalPrice * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
-    }
-    // Helper methods for file output
-    public double getSalesTax() {
-        return getVehicleSold().getPrice() * 0.05;
-    }
-    public double getRecordingFee() {
-        return 100.00;
-    }
-    public double getProcessingFee() {
-        return (getVehicleSold().getPrice() < 10000) ? 295.00 : 495.00;
-    }
-    public String getFinanceOptionString() {
-        return financeOption ? "YES" : "NO";
+
+        return price * (monthlyRate * Math.pow(1 + monthlyRate, months))/
+                (Math.pow(1 + monthlyRate, months) - 1);
     }
 }
-

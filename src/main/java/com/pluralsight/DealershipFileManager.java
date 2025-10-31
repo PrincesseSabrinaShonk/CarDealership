@@ -73,7 +73,7 @@ public class DealershipFileManager { // This class handles reading and saving th
             bw.newLine();
 
             // Write all vehicles
-             for (Vehicle vehicle : dealership.getAllVehicles()) {
+            for (Vehicle vehicle : dealership.getAllVehicles()) {
                 bw.write(vehicle.getVin() + "|" +
                         vehicle.getYear() + "|" +
                         vehicle.getMake() + "|" +
@@ -91,5 +91,5 @@ public class DealershipFileManager { // This class handles reading and saving th
             System.out.println("Error saving dealership: " + e.getMessage());
         }
     }
-}
+    }
 
