@@ -1,4 +1,9 @@
-package com.pluralsight;
+package com.pluralsight.Data;
+
+import com.pluralsight.Models.Contract;
+import com.pluralsight.Models.LeaseContract;
+import com.pluralsight.Models.SalesContract;
+import com.pluralsight.Models.Vehicle;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

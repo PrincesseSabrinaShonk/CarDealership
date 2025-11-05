@@ -1,4 +1,8 @@
-package com.pluralsight;
+package com.pluralsight.UserInterface;
+
+import com.pluralsight.Data.ContractFileManager;
+import com.pluralsight.Data.DealershipFileManager;
+import com.pluralsight.Models.*;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -87,7 +91,6 @@ public class UserInterface { // dealership object will store all cars and dealer
             String date = LocalDate.now().toString().replace("-", "");
 
             String type = ConsoleHelper.promptForString("Is this a (S)ale or (L)ease? Enter S or L").trim().toUpperCase();
-
             Contract contract = null;
 
             if ("L".equalsIgnoreCase(type)) {
@@ -95,48 +98,21 @@ public class UserInterface { // dealership object will store all cars and dealer
                 if (age > 3) {
                     System.out.println("Too old to lease.");
                     return;
-
                 }
-                // Calculate lease-specific values
-                double expectedEndingValue = vehicle.getPrice() * 0.5; // 50% of original price
-                double getLeaseFee = vehicle.getPrice() * 0.07;
 
-                contract = new LeaseContract(date, customerName, customerEmail, vehicle, getLeaseFee,expectedEndingValue );
-
+                contract = new LeaseContract(date, customerName, customerEmail, vehicle);
                 LeaseContract lc = (LeaseContract) contract;
                 System.out.println(lc);
-
-//                System.out.println("\n=== Lease Details ===");
-//                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
-//                System.out.printf("Expected Ending Value: $%.2f%n", lc.getExpectedEndingValue());
-//                System.out.printf("Lease Fee: $%.2f%n", lc.getGetLeaseFee());
-//                System.out.printf("Total Price: $%.2f%n", lc.getTotalPrice());
-//                System.out.printf("Monthly Payment: $%.2f%n", lc.getMonthlyPayment());
-
 
             } else if ("S".equalsIgnoreCase(type)) {
                 String finance = ConsoleHelper.promptForString("Finance? (Y/N)").trim().toUpperCase();
                 boolean isFinanced = "Y".equals(finance);
                 contract = new SalesContract(date, customerName, customerEmail, vehicle, isFinanced);
+
                 SalesContract sc = (SalesContract) contract;
+                System.out.println(sc);
 
 
-                System.out.println("\n=== Sale ===");
-                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
-                System.out.printf("Sales Tax: $%.2f%n", sc.getSalesTaxAmount());
-                System.out.printf("Recording fee: $%.2f%n", sc.getRecordingFee());
-                System.out.printf("Processing fee : $%.2f%n", sc.getProcessingFee());
-                System.out.printf("Total Price: $%.2f%n", sc.getTotalPrice());
-
-
-                if (isFinanced) {
-                    System.out.printf("Monthly Payment: $%.2f%n", sc.getMonthlyPayment());
-                } else {
-                    System.out.println("Paying in full – no monthly payment");
-                }
-            } else {
-                System.out.println("Invalid contract type selected.");
-                return;
                 }
 
             // Save the contract to file

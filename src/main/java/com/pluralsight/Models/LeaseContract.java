@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.Models;
 
 public class LeaseContract extends Contract {
 
@@ -6,10 +6,8 @@ public class LeaseContract extends Contract {
     private double expectedEndingValue;
 
     public LeaseContract(String date, String customerName, String customerEmail,
-                         Vehicle vehicleSold, double getLeaseFee, double expectedEndingValue ) {
+                         Vehicle vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
-        this.expectedEndingValue = expectedEndingValue;
-        this.leaseFee = getLeaseFee;
         double price = vehicleSold.getPrice();
         this.expectedEndingValue = price * 0.50;
         this.leaseFee = price * 0.07;
