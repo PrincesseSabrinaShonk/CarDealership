@@ -72,7 +72,6 @@ public class UserInterface { // dealership object will store all cars and dealer
             }
         }
     }
-
     private void processSellOrLeaseVehicle() {
             System.out.println("\n=== Sell/Lease a Vehicle ===");
             String vin = ConsoleHelper.promptForString("Enter the VIN of the vehicle");
@@ -105,13 +104,14 @@ public class UserInterface { // dealership object will store all cars and dealer
                 contract = new LeaseContract(date, customerName, customerEmail, vehicle, getLeaseFee,expectedEndingValue );
 
                 LeaseContract lc = (LeaseContract) contract;
+                System.out.println(lc);
 
-                System.out.println("\n=== Lease Details ===");
-                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
-                System.out.printf("Expected Ending Value: $%.2f%n", lc.getExpectedEndingValue());
-                System.out.printf("Lease Fee: $%.2f%n", lc.getGetLeaseFee());
-                System.out.printf("Total Price: $%.2f%n", lc.getTotalPrice());
-                System.out.printf("Monthly Payment: $%.2f%n", lc.getMonthlyPayment());
+//                System.out.println("\n=== Lease Details ===");
+//                System.out.printf("Vehicle Price: $%.2f%n", vehicle.getPrice());
+//                System.out.printf("Expected Ending Value: $%.2f%n", lc.getExpectedEndingValue());
+//                System.out.printf("Lease Fee: $%.2f%n", lc.getGetLeaseFee());
+//                System.out.printf("Total Price: $%.2f%n", lc.getTotalPrice());
+//                System.out.printf("Monthly Payment: $%.2f%n", lc.getMonthlyPayment());
 
 
             } else if ("S".equalsIgnoreCase(type)) {

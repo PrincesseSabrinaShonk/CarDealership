@@ -36,4 +36,29 @@ public class LeaseContract extends Contract {
         return price * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
                 (Math.pow(1 + monthlyRate, months) - 1);
     }
+
+//    @Override
+//    public String toString() {
+//        return "LeaseContract{" +
+//                "leaseFee=" + leaseFee +
+//                ", expectedEndingValue=" + expectedEndingValue +
+//                '}';
+
+
+    @Override
+    public String toString() {
+        return String.format(
+                "\n=== Lease Details ===\n" +
+                        "Vehicle Price: $%.2f%n" +
+                        "Expected Ending Value: $%.2f%n" +
+                        "Lease Fee: $%.2f%n" +
+                        "Total Price: $%.2f%n" +
+                        "Monthly Payment: $%.2f%n",
+                getVehicleSold().getPrice(),
+                getExpectedEndingValue(),
+                getGetLeaseFee(),
+                getTotalPrice(),
+                getMonthlyPayment()
+        );
+    }
 }

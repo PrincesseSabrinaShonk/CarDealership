@@ -1,6 +1,8 @@
 package com.pluralsight;
 
 import java.util.ArrayList;  //hold dealership inf of all vehicle the dealership currently has for sale.
+import java.util.List;
+
 public class Dealership {
     private String name;
     private String address;
@@ -100,8 +102,8 @@ public class Dealership {
             }
         }
         return results;
-    }
 
+    }
     public ArrayList<Vehicle> getVehiclesByType( String vehicleType) { // Find vehicles by type
         ArrayList<Vehicle> results = new ArrayList<>();
         for (Vehicle vehicle : inventory) {
@@ -110,7 +112,16 @@ public class Dealership {
             }
         }
         return results;
-      }
+
+
+//    public List<Vehicle> getVehiclesByType(String vehicleType) { // Find vehicles by type
+//      return inventory.stream().filter(v -> v.getVehicleType().equalsIgnoreCase(vehicleType)).toList();
+//    }
+//
+//    public List<Vehicle> getVehiclesByMileage(int min, int max){
+//        return inventory.stream().filter(v -> v.getOdometer() >= min && v.getOdometer() <= max).toList();
+//    }
+    }
 
     @Override
     public String toString() {

@@ -18,7 +18,6 @@ public class ConsoleHelper {
             }
         }
     }
-
     public static double promptForDouble(String prompt) {
         while (true) {
             try {
@@ -30,7 +29,6 @@ public class ConsoleHelper {
             }
         }
     }
-
     public static String promptForString(String prompt) {
         System.out.print(prompt + ": ");
         return scanner.nextLine();
@@ -47,7 +45,6 @@ public class ConsoleHelper {
             }
         }
     }
-
     public static LocalTime promptForTime(String prompt) {
         while (true) {
             try {

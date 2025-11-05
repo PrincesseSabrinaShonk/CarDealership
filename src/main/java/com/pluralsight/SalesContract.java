@@ -37,13 +37,10 @@ public class SalesContract extends Contract{
         return financeOption;
     }
 
-
-
     @Override
     public double getTotalPrice() {
         return getVehicleSold().getPrice() + salesTaxAmount + recordingFee + processingFee;
     }
-
     @Override
     public double getMonthlyPayment() {
         if (!financeOption) {
